@@ -1,72 +1,91 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Delivery Top - Peça Agora</title>
-    <link rel="stylesheet" href="styles.css">
-    <!-- Ícones opcionais (FontAwesome) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Adega 24h Delivery</title>
+
+  <link rel="stylesheet" href="styles.css"/>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
 </head>
+
 <body>
 
-    <header>
-        <div class="header-container">
-            <h1><i class="fas fa-utensils"></i> Delivery Top</h1>
-            <p>O sabor que vai até você!</p>
-        </div>
-    </header>
+  <header class="topo">
+    <div class="logo">
+      🍷 Adega 24h Delivery
+    </div>
 
-    <main class="container">
-        <!-- Seção de Produtos -->
-        <section class="products-section">
-            <h2>Nosso Cardápio</h2>
-            <div id="products-grid" class="products-grid">
-                <!-- Carregado via JavaScript -->
-            </div>
-        </section>
+    <button class="cart-btn" onclick="toggleCart()">
+      <i class="fa-solid fa-cart-shopping"></i>
+      <span id="cart-count">0</span>
+    </button>
+  </header>
 
-        <!-- Seção do Carrinho e Finalização -->
-        <aside class="cart-section">
-            <h2><i class="fas fa-shopping-cart"></i> Seu Carrinho</h2>
-            <div id="cart-items" class="cart-items">
-                <p class="empty-cart">Seu carrinho está vazio.</p>
-            </div>
+  <section class="hero">
+    <div class="overlay">
+      <h1>Bebidas Geladas 24 Horas</h1>
+      <p>Entrega rápida • Promoções exclusivas • Adega Premium</p>
 
-            <div class="cart-total">
-                <h3>Total: <span id="cart-total-value">R$ 0,00</span></h3>
-            </div>
+      <button onclick="scrollToMenu()">
+        VER CARDÁPIO
+      </button>
+    </div>
+  </section>
 
-            <!-- Formulário de Entrega -->
-            <form id="delivery-form" class="delivery-form">
-                <h3>Dados de Entrega</h3>
-                <div class="form-group">
-                    <label for="name">Nome:</label>
-                    <input type="text" id="name" required placeholder="Seu nome completo">
-                </div>
-                <div class="form-group">
-                    <label for="address">Endereço:</label>
-                    <input type="text" id="address" required placeholder="Rua, número, bairro">
-                </div>
-                <div class="form-group">
-                    <label for="payment">Forma de Pagamento:</label>
-                    <select id="payment" required>
-                        <option value="">Selecione...</option>
-                        <option value="Dinheiro">Dinheiro</option>
-                        <option value="Cartão de Crédito">Cartão de Crédito</option>
-                        <option value="Cartão de Débito">Cartão de Débito</option>
-                        <option value="Pix">Pix</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn-submit" id="btn-finish">
-                    <i class="fab fa-whatsapp"></i> Enviar Pedido via WhatsApp
-                </button>
-            </form>
-        </aside>
-    </main>
+  <section class="categories">
+    <button>Whisky</button>
+    <button>Vodka</button>
+    <button>Gin</button>
+    <button>Cerveja</button>
+    <button>Combo</button>
+    <button>Energético</button>
+  </section>
 
-    <!-- Scripts -->
-    <script src="delivery.js"></script>
-    <script src="script.js"></script>
+  <main id="menu" class="menu-container"></main>
+
+  <!-- Carrinho -->
+  <aside id="cart" class="cart">
+
+    <div class="cart-header">
+      <h2>Seu Pedido</h2>
+
+      <button onclick="toggleCart()">
+        ✕
+      </button>
+    </div>
+
+    <div id="cart-items"></div>
+
+    <div class="cart-footer">
+      <h3>Total: R$ <span id="cart-total">0.00</span></h3>
+
+      <button class="checkout-btn" onclick="checkoutWhatsApp()">
+        Finalizar Pedido
+      </button>
+
+      <button class="clear-btn" onclick="clearCart()">
+        Esvaziar Carrinho
+      </button>
+    </div>
+
+  </aside>
+
+  <!-- WhatsApp -->
+  <a
+    href="https://wa.me/5511999999999"
+    class="whatsapp"
+    target="_blank"
+  >
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
+
+  <script src="script.js"></script>
+
 </body>
 </html>
