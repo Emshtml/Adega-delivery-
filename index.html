@@ -1,91 +1,104 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Adega 24h Delivery</title>
-
-  <link rel="stylesheet" href="styles.css"/>
-
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <link rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adega Delivery | Premium Lounge</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0a0a0a">
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
 </head>
-
 <body>
 
-  <header class="topo">
-    <div class="logo">
-      🍷 Adega 24h Delivery
+    <header class="app-header">
+        <div class="logo">
+            <i class="fas fa-wine-bottle gold-text"></i>
+            <span>Adega<span class="gold-text">Premium</span></span>
+        </div>
+        <div class="cart-icon" onclick="toggleCart()">
+            <i class="fas fa-shopping-bag"></i>
+            <span id="cart-count" class="cart-badge">0</span>
+        </div>
+    </header>
+
+    <section class="promo-banner">
+        <div class="banner-content">
+            <span class="badge">Oferta Limitada</span>
+            <h2>Sextou com os Melhores Rótulos</h2>
+            <p>Compre um Vinho Quinta do Crasto e ganhe 15% de desconto no segundo.</p>
+            <div class="countdown">Entrega grátis num raio de 5km!</div>
+        </div>
+        <div class="banner-overlay"></div>
+    </section>
+
+    <div class="category-container">
+        <button class="category-chip active" onclick="filterCategory('todos')">Todos</button>
+        <button class="category-chip" onclick="filterCategory('vinhos')"><i class="fas fa-wine-glass"></i> Vinhos</button>
+        <button class="category-chip" onclick="filterCategory('destilados')"><i class="fas fa-glass-whiskey"></i> Destilados</button>
+        <button class="category-chip" onclick="filterCategory('cervejas')"><i class="fas fa-beer"></i> Cervejas</button>
+        <button class="category-chip" onclick="filterCategory('petiscos')"><i class="fas fa-cheese"></i> Petiscos</button>
     </div>
 
-    <button class="cart-btn" onclick="toggleCart()">
-      <i class="fa-solid fa-cart-shopping"></i>
-      <span id="cart-count">0</span>
-    </button>
-  </header>
+    <main class="products-grid" id="products-container">
+        </main>
 
-  <section class="hero">
-    <div class="overlay">
-      <h1>Bebidas Geladas 24 Horas</h1>
-      <p>Entrega rápida • Promoções exclusivas • Adega Premium</p>
-
-      <button onclick="scrollToMenu()">
-        VER CARDÁPIO
-      </button>
-    </div>
-  </section>
-
-  <section class="categories">
-    <button>Whisky</button>
-    <button>Vodka</button>
-    <button>Gin</button>
-    <button>Cerveja</button>
-    <button>Combo</button>
-    <button>Energético</button>
-  </section>
-
-  <main id="menu" class="menu-container"></main>
-
-  <!-- Carrinho -->
-  <aside id="cart" class="cart">
-
-    <div class="cart-header">
-      <h2>Seu Pedido</h2>
-
-      <button onclick="toggleCart()">
-        ✕
-      </button>
+    <div id="pwa-install-btn" class="pwa-btn hidden">
+        <i class="fas fa-download"></i> Instalar App Adega
     </div>
 
-    <div id="cart-items"></div>
+    <div id="cart-sidebar" class="cart-sidebar">
+        <div class="cart-header">
+            <h3>Seu Carrinho</h3>
+            <i class="fas fa-times close-cart" onclick="toggleCart()"></i>
+        </div>
+        
+        <div id="cart-items" class="cart-items-wrapper">
+            </div>
 
-    <div class="cart-footer">
-      <h3>Total: R$ <span id="cart-total">0.00</span></h3>
-
-      <button class="checkout-btn" onclick="checkoutWhatsApp()">
-        Finalizar Pedido
-      </button>
-
-      <button class="clear-btn" onclick="clearCart()">
-        Esvaziar Carrinho
-      </button>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cart-total-value" class="gold-text">R$ 0,00</span>
+            </div>
+            <button class="btn-checkout" onclick="openCheckoutModal()">Finalizar Pedido via PIX</button>
+        </div>
     </div>
 
-  </aside>
+    <div id="pix-modal" class="modal">
+        <div class="modal-content">
+            <i class="fas fa-times close-modal" onclick="closeCheckoutModal()"></i>
+            <h3><i class="fab fa-pix pix-color"></i> Pagamento PIX</h3>
+            <p>Escaneie o QR Code ou copie a chave abaixo para pagar.</p>
+            
+            <div class="qr-code-box">
+                <div class="qr-border-glow">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=00020101021226830014br.gov.bcb.pix2561api.pix.adegapremium.com/v2/cob/12345&color=d4af37&bgcolor=1a1a1a" alt="QR Code PIX">
+                </div>
+            </div>
 
-  <!-- WhatsApp -->
-  <a
-    href="https://wa.me/5511999999999"
-    class="whatsapp"
-    target="_blank"
-  >
-    <i class="fa-brands fa-whatsapp"></i>
-  </a>
+            <div class="pix-copia-cola">
+                <input type="text" id="pix-key" value="00020101021226830014br.gov.bcb.pix2561api.pix..." readonly>
+                <button onclick="copyPixKey()"><i class="fas fa-copy"></i> Copiar</button>
+            </div>
 
-  <script src="script.js"></script>
+            <button class="btn-whatsapp-confirm" onclick="sendToWhatsApp()">
+                <i class="fab fa-whatsapp"></i> Confirmar no WhatsApp
+            </button>
+        </div>
+    </div>
 
+    <script src="script.js"></script>
+    <script>
+        // Registrar Service Worker para PWA
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+            .then(() => console.log("Service Worker ativo!"))
+            .catch(err => console.log("Erro SW:", err));
+        }
+    </script>
 </body>
 </html>
