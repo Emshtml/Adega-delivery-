@@ -1,278 +1,179 @@
-// ===============================
-// DELIVERY PREMIUM SYSTEM
-// ===============================
+// script.js
 
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
+const products = [
 
-// ===============================
-// UTIL
-// ===============================
+  {
+    name: "Jack Daniels",
+    price: 129.90,
+    image: "https://images.unsplash.com/photo-1569529465841-dfecdab7503b?q=80&w=1200&auto=format&fit=crop"
+  },
 
-function formatPrice(value) {
-  return value.toLocaleString("pt-BR", {
-    style: "currency",
-    currency: "BRL",
-  });
-}
+  {
+    name: "Red Label",
+    price: 99.90,
+    image: "https://images.unsplash.com/photo-1582819509237-df9c0f1a8b4b?q=80&w=1200&auto=format&fit=crop"
+  },
 
-function saveCart() {
-  localStorage.setItem("cart", JSON.stringify(cart));
-}
+  {
+    name: "Heineken Pack",
+    price: 34.90,
+    image: "https://images.unsplash.com/photo-1608270586620-248524c67de9?q=80&w=1200&auto=format&fit=crop"
+  },
 
-// ===============================
-// CART
-// ===============================
+  {
+    name: "Smirnoff Vodka",
+    price: 49.90,
+    image: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?q=80&w=1200&auto=format&fit=crop"
+  },
 
-function addToCart(id, name, price, image) {
-  const existing = cart.find((item) => item.id === id);
+  {
+    name: "Combo Gin + Red Bull",
+    price: 89.90,
+    image: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=1200&auto=format&fit=crop"
+  },
 
-  if (existing) {
-    existing.quantity++;
-  } else {
-    cart.push({
-      id,
-      name,
-      price,
-      image,
-      quantity: 1,
-    });
+  {
+    name: "Corona Long Neck",
+    price: 14.90,
+    image: "https://images.unsplash.com/photo-1609951651556-5334e2706168?q=80&w=1200&auto=format&fit=crop"
   }
 
-  saveCart();
-  renderCart();
-  updateCartCount();
-}
+];
 
-function removeFromCart(id) {
-  cart = cart.filter((item) => item.id !== id);
+const menu = document.getElementById("menu");
 
-  saveCart();
-  renderCart();
-  updateCartCount();
-}
+const cartItems = document.getElementById("cart-items");
 
-function updateQuantity(id, action) {
-  const item = cart.find((item) => item.id === id);
+const cartTotal = document.getElementById("cart-total");
 
-  if (!item) return;
+const cartCount = document.getElementById("cart-count");
 
-  if (action === "increase") {
-    item.quantity++;
-  }
+let cart = [];
 
-  if (action === "decrease") {
-    item.quantity--;
+function renderProducts(){
 
-    if (item.quantity <= 0) {
-      removeFromCart(id);
-      return;
-    }
-  }
+  menu.innerHTML = "";
 
-  saveCart();
-  renderCart();
-  updateCartCount();
-}
+  products.forEach((product,index)=>{
 
-function getSubtotal() {
-  return cart.reduce((acc, item) => {
-    return acc + item.price * item.quantity;
-  }, 0);
-}
+    menu.innerHTML += `
+      <div class="card">
 
-function getDeliveryFee() {
-  return getSubtotal() >= 80 ? 0 : 8;
-}
+        <img src="${product.image}" />
 
-function getTotal() {
-  return getSubtotal() + getDeliveryFee();
-}
+        <div class="card-content">
 
-function updateCartCount() {
-  const counter = document.getElementById("cartCounter");
+          <h3>${product.name}</h3>
 
-  if (!counter) return;
+          <p class="price">
+            R$ ${product.price.toFixed(2)}
+          </p>
 
-  const total = cart.reduce((acc, item) => {
-    return acc + item.quantity;
-  }, 0);
+          <button class="buy-btn"
+          onclick="addToCart(${index})">
 
-  counter.innerText = total;
-}
+            Adicionar
 
-// ===============================
-// RENDER CART
-// ===============================
+          </button>
 
-function renderCart() {
-  const cartItems = document.getElementById("cartItems");
+        </div>
 
-  if (!cartItems) return;
-
-  if (cart.length === 0) {
-    cartItems.innerHTML = `
-      <div class="empty-cart">
-        <h3>Seu carrinho está vazio</h3>
       </div>
     `;
-    return;
-  }
 
-  cartItems.innerHTML = cart
-    .map(
-      (item) => `
+  });
+
+}
+
+function addToCart(index){
+
+  cart.push(products[index]);
+
+  updateCart();
+
+}
+
+function updateCart(){
+
+  cartItems.innerHTML = "";
+
+  let total = 0;
+
+  cart.forEach(item=>{
+
+    total += item.price;
+
+    cartItems.innerHTML += `
       <div class="cart-item">
-        <img src="${item.image}" alt="${item.name}">
 
-        <div class="cart-info">
-          <h4>${item.name}</h4>
-          <p>${formatPrice(item.price)}</p>
+        <h4>${item.name}</h4>
 
-          <div class="quantity">
-            <button onclick="updateQuantity(${item.id}, 'decrease')">-</button>
-            <span>${item.quantity}</span>
-            <button onclick="updateQuantity(${item.id}, 'increase')">+</button>
-          </div>
-        </div>
+        <p>R$ ${item.price.toFixed(2)}</p>
 
-        <div class="cart-total">
-          <strong>${formatPrice(item.price * item.quantity)}</strong>
-
-          <button onclick="removeFromCart(${item.id})">
-            Remover
-          </button>
-        </div>
       </div>
-    `
-    )
-    .join("");
+    `;
 
-  document.getElementById("subtotal").innerText =
-    formatPrice(getSubtotal());
+  });
 
-  document.getElementById("deliveryFee").innerText =
-    getDeliveryFee() === 0
-      ? "GRÁTIS"
-      : formatPrice(getDeliveryFee());
+  cartTotal.innerText = total.toFixed(2);
 
-  document.getElementById("totalPrice").innerText =
-    formatPrice(getTotal());
+  cartCount.innerText = cart.length;
+
 }
 
-// ===============================
-// MODAL
-// ===============================
+function toggleCart(){
 
-function openCart() {
-  document.getElementById("cartModal").classList.add("active");
+  document.getElementById("cart")
+  .classList.toggle("open");
+
 }
 
-function closeCart() {
-  document.getElementById("cartModal").classList.remove("active");
-}
-
-// ===============================
-// CHECKOUT
-// ===============================
-
-function finalizeOrder(e) {
-  e.preventDefault();
-
-  if (cart.length === 0) {
-    alert("Carrinho vazio!");
-    return;
-  }
-
-  const customer = document.getElementById("customerName").value;
-  const phone = document.getElementById("customerPhone").value;
-  const address = document.getElementById("customerAddress").value;
-  const number = document.getElementById("customerNumber").value;
-  const district = document.getElementById("customerDistrict").value;
-  const payment = document.getElementById("paymentMethod").value;
-
-  if (
-    !customer ||
-    !phone ||
-    !address ||
-    !number ||
-    !district ||
-    !payment
-  ) {
-    alert("Preencha todos os campos!");
-    return;
-  }
-
-  const items = cart
-    .map((item) => {
-      return `• ${item.name} x${item.quantity}`;
-    })
-    .join("%0A");
-
-  const message = `
-🍛 *NOVO PEDIDO*
-
-👤 ${customer}
-📞 ${phone}
-
-📍 ${address}, ${number}
-🏙️ ${district}
-
-🛒 ${items}
-
-💰 Total: ${formatPrice(getTotal())}
-
-💳 ${payment}
-`;
-
-  const whatsapp =
-    `https://wa.me/5511999999999?text=${encodeURIComponent(message)}`;
-
-  window.open(whatsapp, "_blank");
-
-  if (payment === "pix") {
-    document.getElementById("pixModal").classList.add("active");
-  }
+function clearCart(){
 
   cart = [];
-  saveCart();
-  renderCart();
-  updateCartCount();
 
-  document.getElementById("checkoutForm").reset();
+  updateCart();
+
 }
 
-// ===============================
-// PIX
-// ===============================
+function checkoutWhatsApp(){
 
-function closePixModal() {
-  document.getElementById("pixModal").classList.remove("active");
-}
+  if(cart.length === 0){
 
-function copyPix() {
-  const pix =
-    "contato@marmitariapremium.com";
+    alert("Seu carrinho está vazio.");
 
-  navigator.clipboard.writeText(pix);
+    return;
 
-  alert("Chave PIX copiada!");
-}
-
-// ===============================
-// INIT
-// ===============================
-
-window.addEventListener("DOMContentLoaded", () => {
-  renderCart();
-  updateCartCount();
-
-  const checkoutForm =
-    document.getElementById("checkoutForm");
-
-  if (checkoutForm) {
-    checkoutForm.addEventListener(
-      "submit",
-      finalizeOrder
-    );
   }
-});
+
+  let message = "🍷 *Pedido Adega 24h Delivery*%0A%0A";
+
+  let total = 0;
+
+  cart.forEach(item=>{
+
+    message += `• ${item.name} - R$ ${item.price.toFixed(2)}%0A`;
+
+    total += item.price;
+
+  });
+
+  message += `%0A💰 Total: R$ ${total.toFixed(2)}`;
+
+  window.open(
+    `https://wa.me/5511999999999?text=${message}`,
+    "_blank"
+  );
+
+}
+
+function scrollToMenu(){
+
+  document.getElementById("menu")
+  .scrollIntoView({
+    behavior:"smooth"
+  });
+
+}
+
+renderProducts();
