@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Marmitaria Delivery Premium</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #f5f5f5;
+  color: #111;
+  padding-bottom: 120px;
+}
+
+img {
+  width: 100%;
+  display: block;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  font-family: inherit;
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  background: #ffffff;
+  padding: 18px 20px;
+  box-shadow: 0 2px 15px rgba(0,0,0,.08);
+}
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo h1 {
+  font-size: 1.2rem;
+}
+
+.logo p {
+  color: #666;
+  font-size: .85rem;
+}
+
+.cart-btn {
+  background: #111;
+  color: #fff;
+  padding: 12px 18px;
+  border-radius: 14px;
+  font-weight: 600;
+  position: relative;
+}
+
+.cart-count {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: crimson;
+  color: #fff;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .75rem;
+}
+
+.hero {
+  padding: 20px;
+}
+
+.hero-card {
+  background: linear-gradient(135deg, #111, #333);
+  color: white;
+  border-radius: 28px;
+  padding: 30px;
+}
+
+.hero-card h2 {
+  font-size: 2rem;
+  line-height: 1.1;
+}
+
+.hero-card p {
+  margin-top: 12px;
+  color: #ddd;
+}
+
+.hero-card button {
+  margin-top: 22px;
+  background: #ffb703;
+  color: #111;
+  padding: 14px 22px;
+  border-radius: 14px;
+  font-weight: 700;
+}
+
+.search {
+  padding: 0 20px;
+}
+
+.search input {
+  width: 100%;
+  padding: 16px;
+  border-radius: 16px;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+}
+
+.categories {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 20px;
+}
+
+.categories button {
+  min-width: max-content;
+  background: white;
+  padding: 12px 18px;
+  border-radius: 14px;
+  font-weight: 600;
+}
+
+.categories button.active {
+  background: #111;
+  color: white;
+}
+
+.menu {
+  padding: 0 20px;
+}
+
+.menu-grid {
+  display: grid;
+  gap: 18px;
+}
+
+.card {
+  background: white;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0,0,0,.06);
+}
+
+.card img {
+  height: 220px;
+  object-fit: cover;
+}
+
+.card-content {
+  padding: 18px;
+}
+
+.card-content h3 {
+  font-size: 1.1rem;
+}
+
+.card-content p {
+  color: #666;
+  margin-top: 8px;
+  font-size: .92rem;
+}
+
+.card-footer {
+  margin-top: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-footer strong {
+  font-size: 1.1rem;
+}
+
+.card-footer button {
+  background: #111;
+  color: white;
+  padding: 12px 18px;
+  border-radius: 14px;
+  font-weight: 600;
+}
+
+.cart-modal,
+.pix-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.7);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 9999;
+}
+
+.cart-modal.active,
+.pix-modal.active {
+  display: flex;
+}
+
+.cart-content,
+.pix-content {
+  width: 100%;
+  max-width: 520px;
+  background: white;
+  border-radius: 28px;
+  padding: 24px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.cart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.close-btn {
+  background: crimson;
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.cart-item {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 18px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid #eee;
+}
+
+.cart-item img {
+  width: 90px;
+  height: 90px;
+  border-radius: 18px;
+  object-fit: cover;
+}
+
+.cart-info {
+  flex: 1;
+}
+
+.cart-info h4 {
+  font-size: 1rem;
+}
+
+.cart-info p {
+  color: #666;
+  margin-top: 4px;
+}
+
+.quantity {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.quantity button {
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  background: #111;
+  color: white;
+}
+
+.remove {
+  background: crimson;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 10px;
+  margin-top: 12px;
+}
+
+.total-box {
+  margin-top: 20px;
+}
+
+.total-line {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.checkout-btn {
+  width: 100%;
+  background: #111;
+  color: white;
+  padding: 16px;
+  border-radius: 16px;
+  margin-top: 20px;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.checkout {
+  padding: 20px;
+}
+
+.checkout-box {
+  background: white;
+  border-radius: 28px;
+  padding: 24px;
+}
+
+.checkout-box h2 {
+  margin-bottom: 20px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.checkout-box input,
+.checkout-box textarea,
+.checkout-box select {
+  width: 100%;
+  margin-top: 14px;
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid #ddd;
+  font-size: .95rem;
+}
+
+.checkout-box textarea {
+  min-height: 120px;
+  resize: none;
+}
+
+.finish-btn {
+  width: 100%;
+  margin-top: 18px;
+  background: #111;
+  color: white;
+  padding: 18px;
+  border-radius: 18px;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.pix-content {
+  text-align: center;
+}
+
+.pix-code {
+  width: 100%;
+  margin-top: 18px;
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid #ddd;
+}
+
+.copy-btn {
+  width: 100%;
+  margin-top: 14px;
+  background: #111;
+  color: white;
+  padding: 16px;
+  border-radius: 16px;
+}
+
+.footer-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: white;
+  padding: 16px;
+  display: flex;
+  justify-content: space-around;
+  box-shadow: 0 -5px 20px rgba(0,0,0,.08);
+}
+
+.footer-nav button {
+  background: transparent;
+  font-size: 1.2rem;
+}
+
+@media(max-width:768px){
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-card h2 {
+    font-size: 1.7rem;
+  }
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-top">
+    <div class="logo">
+      <h1>🍛 Marmitaria Premium</h1>
+      <p>Delivery rápido • Pedido online</p>
+    </div>
+
+    <button class="cart-btn" onclick="openCart()">
+      🛒
+      <span class="cart-count" id="cartCount">0</span>
+    </button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-card">
+    <h2>Sabor caseiro<br>com entrega rápida</h2>
+    <p>Peça agora pratos premium preparados diariamente.</p>
+
+    <button onclick="scrollToMenu()">
+      Ver Cardápio
+    </button>
+  </div>
+</section>
+
+<section class="search">
+  <input type="text" id="searchInput" placeholder="Buscar pratos..." onkeyup="searchProducts()">
+</section>
+
+<section class="categories">
+  <button class="active" onclick="filterCategory('all', this)">Todos</button>
+  <button onclick="filterCategory('tradicional', this)">Tradicional</button>
+  <button onclick="filterCategory('massa', this)">Massas</button>
+  <button onclick="filterCategory('bebida', this)">Bebidas</button>
+</section>
+
+<section class="menu" id="menu">
+  <div class="menu-grid" id="productsContainer"></div>
+</section>
+
+<section class="checkout">
+  <div class="checkout-box">
+    <h2>Finalizar Pedido</h2>
+
+    <form id="checkoutForm">
+      <div class="form-grid">
+        <input type="text" id="name" placeholder="Nome" required>
+        <input type="tel" id="phone" placeholder="Telefone" required>
+      </div>
+
+      <div class="form-grid">
+        <input type="text" id="address" placeholder="Rua / Avenida" required>
+        <input type="text" id="number" placeholder="Número" required>
+      </div>
+
+      <input type="text" id="district" placeholder="Bairro" required>
+
+      <textarea id="notes" placeholder="Observações"></textarea>
+
+      <select id="payment" required>
+        <option value="">Forma de pagamento</option>
+        <option value="pix">PIX</option>
+        <option value="dinheiro">Dinheiro</option>
+        <option value="cartao">Cartão</option>
+      </select>
+
+      <button class="finish-btn" type="submit">
+        Finalizar Pedido
+      </button>
+    </form>
+  </div>
+</section>
+
+<div class="cart-modal" id="cartModal">
+  <div class="cart-content">
+    <div class="cart-header">
+      <h2>Seu Carrinho</h2>
+      <button class="close-btn" onclick="closeCart()">✕</button>
+    </div>
+
+    <div id="cartItems"></div>
+
+    <div class="total-box">
+      <div class="total-line">
+        <span>Subtotal</span>
+        <strong id="subtotal">R$ 0,00</strong>
+      </div>
+
+      <div class="total-line">
+        <span>Entrega</span>
+        <strong id="delivery">R$ 8,00</strong>
+      </div>
+
+      <div class="total-line">
+        <span>Total</span>
+        <strong id="total">R$ 0,00</strong>
+      </div>
+
+      <button class="checkout-btn" onclick="goCheckout()">
+        Ir para Checkout
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="pix-modal" id="pixModal">
+  <div class="pix-content">
+    <button class="close-btn" onclick="closePix()">✕</button>
+
+    <h2>Pagamento PIX</h2>
+
+    <p style="margin-top:12px; color:#666;">
+      Utilize a chave PIX abaixo.
+    </p>
+
+    <img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=PIX-MARMITARIA" style="width:220px; margin:20px auto; border-radius:20px;">
+
+    <textarea class="pix-code" readonly id="pixCode">contato@marmitariapremium.com</textarea>
+
+    <button class="copy-btn" onclick="copyPix()">
+      Copiar Chave PIX
+    </button>
+  </div>
+</div>
+
+<div class="footer-nav">
+  <button onclick="window.scrollTo({top:0,behavior:'smooth'})">🏠</button>
+  <button onclick="scrollToMenu()">🍛</button>
+  <button onclick="openCart()">🛒</button>
+</div>
+
+<script>
+const products = [
+  {
+    id:1,
+    name:'Feijoada Premium',
+    price:34.90,
+    image:'https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?q=80&w=1200&auto=format&fit=crop',
+    category:'tradicional',
+    desc:'Feijoada completa com arroz e farofa.'
+  },
+  {
+    id:2,
+    name:'Strogonoff de Frango',
+    price:29.90,
+    image:'https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1200&auto=format&fit=crop',
+    category:'tradicional',
+    desc:'Frango ao molho cremoso e batata palha.'
+  },
+  {
+    id:3,
+    name:'Lasanha Bolonhesa',
+    price:32.90,
+    image:'https://images.unsplash.com/photo-1619895092538-128341789043?q=80&w=1200&auto=format&fit=crop',
+    category:'massa',
+    desc:'Lasanha artesanal recheada.'
+  },
+  {
+    id:4,
+    name:'Coca-Cola 2L',
+    price:14.90,
+    image:'https://images.unsplash.com/photo-1629203851122-3726ecdf080e?q=80&w=1200&auto=format&fit=crop',
+    category:'bebida',
+    desc:'Bebida gelada.'
+  }
+];
+
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+function formatPrice(value){
+  return value.toLocaleString('pt-BR', {
+    style:'currency',
+    currency:'BRL'
+  });
+}
+
+function renderProducts(list = products){
+  const container = document.getElementById('productsContainer');
+
+  container.innerHTML = list.map(product => `
+    <div class="card">
+      <img src="${product.image}">
+
+      <div class="card-content">
+        <h3>${product.name}</h3>
+        <p>${product.desc}</p>
+
+        <div class="card-footer">
+          <strong>${formatPrice(product.price)}</strong>
+
+          <button onclick="addCart(${product.id})">
+            Adicionar
+          </button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function addCart(id){
+  const product = products.find(item => item.id === id);
+
+  const exists = cart.find(item => item.id === id);
+
+  if(exists){
+    exists.quantity++;
+  } else {
+    cart.push({...product, quantity:1});
+  }
+
+  saveCart();
+  renderCart();
+}
+
+function removeItem(id){
+  cart = cart.filter(item => item.id !== id);
+
+  saveCart();
+  renderCart();
+}
+
+function updateQuantity(id, action){
+  const item = cart.find(product => product.id === id);
+
+  if(!item) return;
+
+  if(action === 'increase'){
+    item.quantity++;
+  }
+
+  if(action === 'decrease'){
+    item.quantity--;
+
+    if(item.quantity <= 0){
+      removeItem(id);
+      return;
+    }
+  }
+
+  saveCart();
+  renderCart();
+}
+
+function saveCart(){
+  localStorage.setItem('cart', JSON.stringify(cart));
+}
+
+function renderCart(){
+  const cartItems = document.getElementById('cartItems');
+
+  if(cart.length === 0){
+    cartItems.innerHTML = '<p>Carrinho vazio.</p>';
+
+    document.getElementById('subtotal').innerText = 'R$ 0,00';
+    document.getElementById('total').innerText = 'R$ 0,00';
+    document.getElementById('cartCount').innerText = '0';
+    return;
+  }
+
+  cartItems.innerHTML = cart.map(item => `
+    <div class="cart-item">
+      <img src="${item.image}">
+
+      <div class="cart-info">
+        <h4>${item.name}</h4>
+        <p>${formatPrice(item.price)}</p>
+
+        <div class="quantity">
+          <button onclick="updateQuantity(${item.id}, 'decrease')">-</button>
+          <span>${item.quantity}</span>
+          <button onclick="updateQuantity(${item.id}, 'increase')">+</button>
+        </div>
+
+        <button class="remove" onclick="removeItem(${item.id})">
+          Remover
+        </button>
+      </div>
+    </div>
+  `).join('');
+
+  const subtotal = cart.reduce((acc, item) => {
+    return acc + item.price * item.quantity;
+  },0);
+
+  const total = subtotal + 8;
+
+  document.getElementById('subtotal').innerText = formatPrice(subtotal);
+  document.getElementById('total').innerText = formatPrice(total);
+
+  const totalItems = cart.reduce((acc, item)=>{
+    return acc + item.quantity;
+  },0);
+
+  document.getElementById('cartCount').innerText = totalItems;
+}
+
+function openCart(){
+  document.getElementById('cartModal').classList.add('active');
+}
+
+function closeCart(){
+  document.getElementById('cartModal').classList.remove('active');
+}
+
+function closePix(){
+  document.getElementById('pixModal').classList.remove('active');
+}
+
+function goCheckout(){
+  closeCart();
+
+  document.querySelector('.checkout').scrollIntoView({
+    behavior:'smooth'
+  });
+}
+
+function copyPix(){
+  navigator.clipboard.writeText('contato@marmitariapremium.com');
+
+  alert('Chave PIX copiada!');
+}
+
+function scrollToMenu(){
+  document.getElementById('menu').scrollIntoView({
+    behavior:'smooth'
+  });
+}
+
+function searchProducts(){
+  const value = document.getElementById('searchInput').value.toLowerCase();
+
+  const filtered = products.filter(product => {
+    return product.name.toLowerCase().includes(value);
+  });
+
+  renderProducts(filtered);
+}
+
+function filterCategory(category, button){
+  document.querySelectorAll('.categories button').forEach(btn => {
+    btn.classList.remove('active');
+  });
+
+  button.classList.add('active');
+
+  if(category === 'all'){
+    renderProducts(products);
+    return;
+  }
+
+  const filtered = products.filter(product => {
+    return product.category === category;
+  });
+
+  renderProducts(filtered);
+}
+
+const checkoutForm = document.getElementById('checkoutForm');
+
+checkoutForm.addEventListener('submit', (e)=>{
+  e.preventDefault();
+
+  if(cart.length === 0){
+    alert('Adicione itens ao carrinho!');
+    return;
+  }
+
+  const payment = document.getElementById('payment').value;
+
+  const message = `Novo pedido Marmitaria Premium`;
+
+  window.open(`https://wa.me/5511976794749?text=${encodeURIComponent(message)}`,'_blank');
+
+  if(payment === 'pix'){
+    document.getElementById('pixModal').classList.add('active');
+  }
+
+  alert('Pedido realizado com sucesso!');
+
+  cart = [];
+  saveCart();
+  renderCart();
+  checkoutForm.reset();
+});
+
+renderProducts();
+renderCart();
+</script>
+</body>
+</html>
+
+                  
