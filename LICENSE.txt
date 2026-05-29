@@ -1,0 +1,21 @@
+# LICENSE.txt
+
+```txt
+========================================================
+© 2026 ADEGA 24H DELIVERY PREMIUM
+Todos os direitos reservados.
+
+Proprietário:
+EMERSON RODRIGUES DA ROCHA
+
+Este sistema é protegido por direitos autorais.
+
+É proibida a reprodução, revenda,
+redistribuição ou reutilização total/parcial
+sem autorização do proprietário.
+
+Sistema comercial para delivery de adega.
+
+Brasil - 2026
+========================================================
+```
