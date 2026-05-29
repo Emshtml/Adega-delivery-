@@ -1,151 +1,473 @@
-// Banco de dados Mock Premium
-const PRODUCTS = [
-    { id: 1, name: "Vinho Quinta do Crasto Douro", price: 149.90, category: "vinhos", img: "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=300" },
-    { id: 2, name: "Whisky Johnnie Walker Black Label", price: 189.00, category: "destilados", img: "https://images.unsplash.com/photo-1527281400683-1aae777175f8?w=300" },
-    { id: 3, name: "Cerveja Artesanal IPA Premium", price: 18.90, category: "cervejas", img: "https://images.unsplash.com/photo-1608270586620-248524c67de9?w=300" },
-    { id: 4, name: "Gin Tanqueray London Dry", price: 135.00, category: "destilados", img: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=300" }
+/*
+========================================================
+© 2026 ADEGA 24H DELIVERY PREMIUM
+Todos os direitos reservados.
+
+Proprietário:
+EMERSON RODRIGUES DA ROCHA
+
+É proibida a cópia, redistribuição,
+revenda ou reutilização deste sistema
+sem autorização do proprietário.
+
+Sistema protegido por direitos autorais.
+========================================================
+*/
+
+const produtos = [
+
+{
+id:1,
+nome:"Whisky Jack Daniels",
+descricao:"Whisky premium importado.",
+preco:129.90,
+imagem:"./assets/jack-daniels.jpg"
+},
+
+{
+id:2,
+nome:"Heineken Long Neck",
+descricao:"Cerveja premium gelada.",
+preco:8.90,
+imagem:"./assets/heineken.jpg"
+},
+
+{
+id:3,
+nome:"Red Bull Energy Drink",
+descricao:"Energético Red Bull 250ml.",
+preco:14.90,
+imagem:"./assets/redbull.jpg"
+},
+
+{
+id:4,
+nome:"Smirnoff Ice",
+descricao:"Bebida ice sabor limão.",
+preco:12.90,
+imagem:"./assets/smirnoff-ice.jpg"
+},
+
+{
+id:5,
+nome:"Vodka Absolut",
+descricao:"Vodka premium importada.",
+preco:89.90,
+imagem:"./assets/absolut.jpg"
+},
+
+{
+id:6,
+nome:"Guaraná Antarctica 2L",
+descricao:"Refrigerante gelado.",
+preco:13.90,
+imagem:"./assets/guarana.jpg"
+},
+
+{
+id:7,
+nome:"Combo Skol + Gelo",
+descricao:"Combo especial da madrugada.",
+preco:49.90,
+imagem:"./assets/skol-combo.jpg"
+},
+
+{
+id:8,
+nome:"Vinho Tinto Suave",
+descricao:"Vinho suave premium.",
+preco:39.90,
+imagem:"./assets/vinho.jpg"
+}
+
 ];
 
-let cart = [];
+let carrinho = [];
 
-// Inicialização da vitrine
-document.addEventListener("DOMContentLoaded", () => {
-    renderProducts(PRODUCTS);
-    setupPWA();
+const cardapioContainer =
+document.getElementById("cardapio");
+
+const modalCarrinho =
+document.getElementById("modal-carrinho");
+
+const btnVerCarrinho =
+document.getElementById("btn-ver-carrinho");
+
+const btnFecharModal =
+document.getElementById("btn-fechar-modal");
+
+const itensCarrinhoContainer =
+document.getElementById("itens-carrinho");
+
+const totalBarra =
+document.getElementById("total-barra");
+
+const totalModal =
+document.getElementById("total-modal");
+
+const contadorCarrinho =
+document.getElementById("contador-carrinho");
+
+const inputEndereco =
+document.getElementById("input-endereco");
+
+const avisoEndereco =
+document.getElementById("aviso-endereco");
+
+const btnFinalizarPedido =
+document.getElementById("btn-finalizar-pedido");
+
+/* PIX */
+
+const chavePix =
+"00020101021126580014br.gov.bcb.pix0136581e7489-78a4-4c1a-a5a6-cc241cb1dbf55204000053039865802BR5925EMERSON RODRIGUES DA ROCH6009SAO PAULO622905251KST5W8STWTK7TDDEM0XY7GTS6304B666";
+
+/* RENDERIZAR CARDÁPIO */
+
+function renderizarCardapio(){
+
+cardapioContainer.innerHTML = "";
+
+produtos.forEach(produto => {
+
+const div = document.createElement("div");
+
+div.className =
+"card-produto rounded-3xl overflow-hidden shadow-2xl flex flex-col";
+
+div.innerHTML = `
+<img
+src="${produto.imagem}"
+alt="${produto.nome}"
+class="w-full h-56 object-cover"
+>
+
+<div class="p-5 flex flex-col flex-1">
+
+<h3 class="font-extrabold text-xl gold">
+${produto.nome}
+</h3>
+
+<p class="text-gray-400 text-sm mt-2 flex-1">
+${produto.descricao}
+</p>
+
+<div class="flex items-center justify-between mt-5">
+
+<span class="text-2xl font-extrabold text-yellow-400">
+R$ ${produto.preco.toFixed(2).replace(".", ",")}
+</span>
+
+<button
+class="btn-gold px-4 py-3 rounded-xl shadow-lg btn-add"
+data-id="${produto.id}"
+>
+<i class="fa-solid fa-plus"></i>
+</button>
+
+</div>
+
+</div>
+`;
+
+cardapioContainer.appendChild(div);
+
 });
 
-function renderProducts(productsList) {
-    const container = document.getElementById("products-container");
-    container.innerHTML = productsList.map(prod => `
-        <div class="product-card" data-category="${prod.category}">
-            <img src="${prod.img}" alt="${prod.name}" class="product-img">
-            <div class="product-info">
-                <h4>${prod.name}</h4>
-                <div class="product-price">R$ ${prod.price.toFixed(2).replace('.', ',')}</div>
-            </div>
-            <button class="btn-add" onclick="addToCart(${prod.id})">Adicionar</button>
-        </div>
-    `).join('');
 }
 
-// Filtro de Categorias
-function filterCategory(category) {
-    document.querySelectorAll('.category-chip').forEach(btn => btn.classList.remove('active'));
-    event.target.classList.add('active');
-    
-    if(category === 'todos') {
-        renderProducts(PRODUCTS);
-    } else {
-        const filtered = PRODUCTS.filter(p => p.category === category);
-        renderProducts(filtered);
-    }
+/* ADICIONAR */
+
+cardapioContainer.addEventListener("click",(e)=>{
+
+const botao =
+e.target.closest(".btn-add");
+
+if(botao){
+
+const id =
+parseInt(botao.getAttribute("data-id"));
+
+adicionarAoCarrinho(id);
+
 }
 
-// Controle do Carrinho
-function toggleCart() {
-    document.getElementById("cart-sidebar").classList.toggle("open");
+});
+
+function adicionarAoCarrinho(id){
+
+const produto =
+produtos.find(p => p.id === id);
+
+const itemExistente =
+carrinho.find(item => item.id === id);
+
+if(itemExistente){
+
+itemExistente.quantidade++;
+
+}else{
+
+carrinho.push({
+...produto,
+quantidade:1
+});
+
 }
 
-function addToCart(id) {
-    const product = PRODUCTS.find(p => p.id === id);
-    const existing = cart.find(item => item.id === id);
+mostrarNotificacao(`${produto.nome} adicionado ao carrinho`);
 
-    if (existing) {
-        existing.quantity += 1;
-    } else {
-        cart.push({ ...product, quantity: 1 });
-    }
-    updateCartUI();
+atualizarInterface();
+
 }
 
-function updateQuantity(id, change) {
-    const item = cart.find(i => i.id === id);
-    if(item) {
-        item.quantity += change;
-        if(item.quantity <= 0) {
-            cart = cart.filter(i => i.id !== id);
-        }
-    }
-    updateCartUI();
+/* INTERFACE */
+
+function atualizarInterface(){
+
+let total = 0;
+let totalItens = 0;
+
+carrinho.forEach(item => {
+
+total += item.preco * item.quantidade;
+totalItens += item.quantidade;
+
+});
+
+totalBarra.textContent =
+`R$ ${total.toFixed(2).replace(".", ",")}`;
+
+totalModal.textContent =
+`R$ ${total.toFixed(2).replace(".", ",")}`;
+
+contadorCarrinho.textContent =
+totalItens;
+
 }
 
-function updateCartUI() {
-    const itemsWrapper = document.getElementById("cart-items");
-    const countBadge = document.getElementById("cart-count");
-    const totalSpan = document.getElementById("cart-total-value");
-    
-    let total = 0;
-    let itemsCount = 0;
+/* MODAL */
 
-    itemsWrapper.innerHTML = cart.map(item => {
-        total += item.price * item.quantity;
-        itemsCount += item.quantity;
-        return `
-            <div class="cart-item">
-                <div class="cart-item-info">
-                    <h5>${item.name}</h5>
-                    <span>R$ ${(item.price * item.quantity).toFixed(2)}</span>
-                </div>
-                <div class="cart-item-actions">
-                    <button onclick="updateQuantity(${item.id}, -1)">-</button>
-                    <span>${item.quantity}</span>
-                    <button onclick="updateQuantity(${item.id}, 1)">+</button>
-                </div>
-            </div>
-        `;
-    }).join('');
+btnVerCarrinho.addEventListener("click",()=>{
 
-    countBadge.innerText = itemsCount;
-    totalSpan.innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
+renderizarCarrinhoModal();
+
+modalCarrinho.classList.remove("hidden");
+
+});
+
+btnFecharModal.addEventListener("click",()=>{
+
+modalCarrinho.classList.add("hidden");
+
+});
+
+modalCarrinho.addEventListener("click",(e)=>{
+
+if(e.target === modalCarrinho){
+
+modalCarrinho.classList.add("hidden");
+
 }
 
-// Modais & Checkout
-function openCheckoutModal() {
-    if(cart.length === 0) return alert("Seu carrinho está vazio!");
-    document.getElementById("pix-modal").classList.add("open");
+});
+
+/* RENDERIZAR CARRINHO */
+
+function renderizarCarrinhoModal(){
+
+itensCarrinhoContainer.innerHTML = "";
+
+if(carrinho.length === 0){
+
+itensCarrinhoContainer.innerHTML = `
+<p class="text-center text-gray-400">
+Seu carrinho está vazio.
+</p>
+`;
+
+return;
+
 }
 
-function closeCheckoutModal() {
-    document.getElementById("pix-modal").classList.remove("open");
+carrinho.forEach(item => {
+
+const div = document.createElement("div");
+
+div.className =
+"bg-zinc-800 rounded-2xl p-4 flex items-center justify-between";
+
+div.innerHTML = `
+<div>
+
+<h4 class="font-bold text-sm">
+${item.nome}
+</h4>
+
+<span class="text-gray-400 text-xs">
+R$ ${item.preco.toFixed(2).replace(".", ",")}
+</span>
+
+</div>
+
+<div class="flex items-center gap-3">
+
+<button
+class="text-red-500 font-bold btn-diminuir"
+data-id="${item.id}"
+>
+-
+</button>
+
+<span class="font-bold">
+${item.quantidade}
+</span>
+
+<button
+class="text-green-500 font-bold btn-aumentar"
+data-id="${item.id}"
+>
++
+</button>
+
+</div>
+`;
+
+itensCarrinhoContainer.appendChild(div);
+
+});
+
 }
 
-function copyPixKey() {
-    const input = document.getElementById("pix-key");
-    input.select();
-    navigator.clipboard.writeText(input.value);
-    alert("Chave Copia e Cola copiada com sucesso!");
+/* ALTERAR QUANTIDADE */
+
+itensCarrinhoContainer.addEventListener("click",(e)=>{
+
+if(e.target.classList.contains("btn-aumentar")){
+
+const id =
+parseInt(e.target.getAttribute("data-id"));
+
+const item =
+carrinho.find(i => i.id === id);
+
+item.quantidade++;
+
 }
 
-function sendToWhatsApp() {
-    let message = `*Novo Pedido - Adega Premium*%0A%0A`;
-    cart.forEach(item => {
-        message += `${item.quantity}x ${item.name} - R$ ${(item.price * item.quantity).toFixed(2)}%0A`;
-    });
-    const total = document.getElementById("cart-total-value").innerText;
-    message += `%0A*Total:* ${total}%0A*Forma de Pagamento:* PIX (Efetuado)`;
-    
-    // Altere o número abaixo para o WhatsApp da adega
-    window.open(`https://wa.me/5511999999999?text=${message}`, '_blank');
+if(e.target.classList.contains("btn-diminuir")){
+
+const id =
+parseInt(e.target.getAttribute("data-id"));
+
+const idx =
+carrinho.findIndex(i => i.id === id);
+
+if(carrinho[idx].quantidade > 1){
+
+carrinho[idx].quantidade--;
+
+}else{
+
+carrinho.splice(idx,1);
+
 }
 
-// Configuração PWA para Dispositivos Móveis
-let deferredPrompt;
-function setupPWA() {
-    const installBtn = document.getElementById('pwa-install-btn');
-    window.addEventListener('beforeinstallprompt', (e) => {
-        e.preventDefault();
-        deferredPrompt = e;
-        installBtn.classList.remove('hidden');
-    });
-
-    installBtn.addEventListener('click', async () => {
-        if (deferredPrompt) {
-            deferredPrompt.prompt();
-            const { outcome } = await deferredPrompt.userChoice;
-            if (outcome === 'accepted') {
-                installBtn.classList.add('hidden');
-            }
-            deferredPrompt = null;
-        }
-    });
 }
+
+atualizarInterface();
+renderizarCarrinhoModal();
+
+});
+
+/* COPIAR PIX */
+
+function copiarPix(){
+
+navigator.clipboard.writeText(chavePix);
+
+mostrarNotificacao("Chave PIX copiada!");
+
+}
+
+/* FINALIZAR PEDIDO */
+
+btnFinalizarPedido.addEventListener("click",()=>{
+
+if(carrinho.length === 0){
+
+alert("Seu carrinho está vazio!");
+return;
+
+}
+
+if(inputEndereco.value.trim() === ""){
+
+avisoEndereco.classList.remove("hidden");
+return;
+
+}
+
+avisoEndereco.classList.add("hidden");
+
+let mensagem =
+`🍷 *ADEGA 24H DELIVERY* 🍷\n\n`;
+
+carrinho.forEach(item => {
+
+mensagem +=
+`• ${item.quantidade}x ${item.nome} - R$ ${(item.preco * item.quantidade).toFixed(2)}\n`;
+
+});
+
+const total =
+carrinho.reduce((acc,item)=>{
+return acc + item.preco * item.quantidade;
+},0);
+
+mensagem +=
+`\n💰 *Total:* R$ ${total.toFixed(2)}`;
+
+mensagem +=
+`\n📍 *Endereço:* ${inputEndereco.value}`;
+
+mensagem +=
+`\n\n💳 *Pagamento:* PIX`;
+
+mensagem +=
+`\n\n✅ Pedido enviado com sucesso!`;
+
+const telefone = "5511999999999";
+
+const url =
+`https://api.whatsapp.com/send?phone=${telefone}&text=${encodeURIComponent(mensagem)}`;
+
+window.open(url,"_blank");
+
+});
+
+/* NOTIFICAÇÃO */
+
+function mostrarNotificacao(texto){
+
+const notificacao =
+document.createElement("div");
+
+notificacao.className =
+"fixed top-6 right-6 bg-yellow-400 text-black font-bold px-6 py-4 rounded-2xl shadow-2xl z-[9999]";
+
+notificacao.textContent = texto;
+
+document.body.appendChild(notificacao);
+
+setTimeout(()=>{
+
+notificacao.remove();
+
+},2500);
+
+}
+
+/* INICIAR */
+
+renderizarCardapio();
