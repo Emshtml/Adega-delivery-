@@ -1,106 +1,764 @@
+<!--
+========================================================
+© 2026 ADEGA 24H DELIVERY PREMIUM
+Todos os direitos reservados.
+
+Proprietário:
+EMERSON RODRIGUES DA ROCHA
+
+É proibida a cópia, revenda, redistribuição,
+modificação ou reutilização deste sistema
+sem autorização do proprietário.
+
+Sistema comercial protegido por direitos autorais.
+========================================================
+-->
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adega Delivery | Premium Lounge</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#0a0a0a">
-    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>Adega 24h Delivery Premium</title>
+
+<!-- Tailwind -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- Font Awesome -->
+<link
+rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+/>
+
+<!-- Fonte -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link
+href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+rel="stylesheet"
+/>
+
+<style>
+
+*{
+    font-family:"Poppins",sans-serif;
+}
+
+body{
+    background:#050505;
+    color:white;
+}
+
+.banner{
+    background:
+    linear-gradient(rgba(0,0,0,.78), rgba(0,0,0,.88)),
+    url("./assets/banner-adega.jpg");
+
+    background-size:cover;
+    background-position:center;
+}
+
+.card-produto{
+    background:#111111;
+    border:1px solid #2a2a2a;
+}
+
+.card-produto:hover{
+    transform:translateY(-6px);
+    transition:.3s;
+    border-color:#facc15;
+}
+
+.scroll-hidden::-webkit-scrollbar{
+    display:none;
+}
+
+.gold{
+    color:#facc15;
+}
+
+.bg-gold{
+    background:#facc15;
+}
+
+.btn-gold{
+    background:#facc15;
+    color:black;
+    font-weight:700;
+}
+
+.btn-gold:hover{
+    background:#eab308;
+}
+
+.status-preparo{
+    background:#f59e0b;
+}
+
+.status-pronto{
+    background:#16a34a;
+}
+
+</style>
+
 </head>
+
 <body>
 
-    <header class="app-header">
-        <div class="logo"><
-            img src="minhalogo.png" alt="Adega 24h">
-</di
-            <di class="fas fa-wine-bottle gold-text"></i>
-            <span>Adega<span class="gold-text">Premium</span></span>
-        </div>
-        <div class="cart-icon" onclick="toggleCart()">
-            <i class="fas fa-shopping-bag"></i>
-            <span id="cart-count" class="cart-badge">0</span>
-        </div>
-    </header>
+<!-- HERO -->
+<header class="banner min-h-[85vh] flex items-center justify-center">
 
-    <section class="promo-banner">
-        <div class="banner-content">
-            <span class="badge">Oferta Limitada</span>
-            <h2>Sextou com os Melhores Rótulos</h2>
-            <p>Compre um Vinho Quinta do Crasto e ganhe 15% de desconto no segundo.</p>
-            <div class="countdown">Entrega grátis num raio de 5km!</div>
-        </div>
-        <div class="banner-overlay"></div>
-    </section>
+<div class="text-center px-6">
 
-    <div class="category-container">
-        <button class="category-chip active" onclick="filterCategory('todos')">Todos</button>
-        <button class="category-chip" onclick="filterCategory('vinhos')"><i class="fas fa-wine-glass"></i> Vinhos</button>
-        <button class="category-chip" onclick="filterCategory('destilados')"><i class="fas fa-glass-whiskey"></i> Destilados</button>
-        <button class="category-chip" onclick="filterCategory('cervejas')"><i class="fas fa-beer"></i> Cervejas</button>
-        <button class="category-chip" onclick="filterCategory('petiscos')"><i class="fas fa-cheese"></i> Petiscos</button>
-    </div>
+<img
+src="./assets/logo-adega24h.png"
+alt="Adega 24h"
+class="w-72 mx-auto drop-shadow-2xl"
+/>
 
-    <main class="products-grid" id="products-container">
-        </main>
+<h1 class="text-5xl md:text-7xl font-extrabold gold mt-8">
+ADEGA 24H
+</h1>
 
-    <div id="pwa-install-btn" class="pwa-btn hidden">
-        <i class="fas fa-download"></i> Instalar App Adega
-    </div>
+<p class="text-gray-300 mt-6 max-w-2xl mx-auto text-lg leading-relaxed">
+Whiskys, cervejas, energéticos, refrigerantes,
+vinhos, cigarros e muito mais com entrega rápida.
+</p>
 
-    <div id="cart-sidebar" class="cart-sidebar">
-        <div class="cart-header">
-            <h3>Seu Carrinho</h3>
-            <i class="fas fa-times close-cart" onclick="toggleCart()"></i>
-        </div>
-        
-        <div id="cart-items" class="cart-items-wrapper">
-            </div>
+<button
+onclick="document.getElementById('cardapio').scrollIntoView({behavior:'smooth'})"
+class="mt-8 btn-gold px-8 py-4 rounded-2xl shadow-2xl transition-all active:scale-95"
+>
+VER CARDÁPIO
+</button>
 
-        <div class="cart-footer">
-            <div class="cart-total">
-                <span>Total:</span>
-                <span id="cart-total-value" class="gold-text">R$ 0,00</span>
-            </div>
-            <button class="btn-checkout" onclick="openCheckoutModal()">Finalizar Pedido via PIX</button>
-        </div>
-    </div>
+</div>
 
-    <div id="pix-modal" class="modal">
-        <div class="modal-content">
-            <i class="fas fa-times close-modal" onclick="closeCheckoutModal()"></i>
-            <h3><i class="fab fa-pix pix-color"></i> Pagamento PIX</h3>
-            <p>Escaneie o QR Code ou copie a chave abaixo para pagar.</p>
-            
-            <div class="qr-code-box">
-                <div class="qr-border-glow">
-                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=00020101021226830014br.gov.bcb.pix2561api.pix.adegapremium.com/v2/cob/12345&color=d4af37&bgcolor=1a1a1a" alt="QR Code PIX">
-                </div>
-            </div>
+</header>
 
-            <div class="pix-copia-cola">
-                <input type="text" id="pix-key" value="00020101021226830014br.gov.bcb.pix2561api.pix..." readonly>
-                <button onclick="copyPixKey()"><i class="fas fa-copy"></i> Copiar</button>
-            </div>
+<!-- STATUS PEDIDO -->
+<section class="py-8 px-4">
 
-            <button class="btn-whatsapp-confirm" onclick="sendToWhatsApp()">
-                <i class="fab fa-whatsapp"></i> Confirmar no WhatsApp
-            </button>
-        </div>
-    </div>
+<div class="max-w-6xl mx-auto">
 
-    <script src="script.js"></script>
-    <script>
-        // Registrar Service Worker para PWA
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/sw.js')
-            .then(() => console.log("Service Worker ativo!"))
-            .catch(err => console.log("Erro SW:", err));
-        }
-    </script>
+<div class="grid md:grid-cols-2 gap-5">
+
+<div class="status-preparo rounded-3xl p-6 shadow-2xl">
+<div class="flex items-center gap-4">
+
+<i class="fa-solid fa-fire text-4xl"></i>
+
+<div>
+<h3 class="font-extrabold text-2xl">
+Pedido em preparo
+</h3>
+
+<p class="text-sm mt-1">
+Seu pedido está sendo separado.
+</p>
+</div>
+
+</div>
+</div>
+
+<div class="status-pronto rounded-3xl p-6 shadow-2xl">
+<div class="flex items-center gap-4">
+
+<i class="fa-solid fa-check text-4xl"></i>
+
+<div>
+<h3 class="font-extrabold text-2xl">
+Pedido pronto
+</h3>
+
+<p class="text-sm mt-1">
+Seu pedido saiu para entrega.
+</p>
+</div>
+
+</div>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- CARDÁPIO -->
+<section class="py-16 px-4">
+
+<div class="max-w-7xl mx-auto">
+
+<div class="text-center mb-14">
+
+<h2 class="text-5xl font-extrabold gold">
+Nosso Cardápio
+</h2>
+
+<p class="text-gray-400 mt-3">
+Bebidas geladas e produtos premium
+</p>
+
+</div>
+
+<div
+id="cardapio"
+class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"
+></div>
+
+</div>
+
+</section>
+
+<!-- CARRINHO -->
+<div class="fixed bottom-6 right-6 z-50">
+
+<button
+id="btn-ver-carrinho"
+class="bg-yellow-400 hover:bg-yellow-500 text-black px-6 py-4 rounded-full shadow-2xl flex items-center gap-3 transition-all active:scale-95"
+>
+
+<i class="fa-solid fa-cart-shopping text-xl"></i>
+
+<div class="text-left">
+<p class="text-xs font-bold">
+Carrinho
+</p>
+
+<span id="total-barra" class="font-bold">
+R$ 0,00
+</span>
+</div>
+
+<span
+id="contador-carrinho"
+class="bg-black text-yellow-400 w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold"
+>
+0
+</span>
+
+</button>
+
+</div>
+
+<!-- MODAL -->
+<div
+id="modal-carrinho"
+class="hidden fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
+>
+
+<div class="bg-zinc-900 w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden border border-yellow-500">
+
+<!-- TOPO -->
+<div class="bg-black p-6 flex items-center justify-between border-b border-yellow-500">
+
+<div>
+<h3 class="text-2xl font-extrabold gold">
+Seu Pedido
+</h3>
+
+<p class="text-gray-400 text-sm">
+Adega 24h Delivery
+</p>
+</div>
+
+<button
+id="btn-fechar-modal"
+class="text-white text-2xl hover:text-red-400"
+>
+<i class="fa-solid fa-xmark"></i>
+</button>
+
+</div>
+
+<!-- ITENS -->
+<div
+id="itens-carrinho"
+class="p-6 max-h-[300px] overflow-y-auto scroll-hidden space-y-4"
+></div>
+
+<!-- PIX -->
+<div class="px-6 pb-4">
+
+<div class="bg-black border border-yellow-500 rounded-2xl p-5">
+
+<h3 class="font-bold text-yellow-400 text-xl mb-3">
+Pagamento PIX
+</h3>
+
+<img
+src="./assets/qrcode-pix.png"
+alt="QR Code PIX"
+class="w-52 mx-auto rounded-2xl"
+/>
+
+<p class="text-sm text-gray-300 mt-4 break-all">
+00020101021126580014br.gov.bcb.pix0136581e7489-78a4-4c1a-a5a6-cc241cb1dbf55204000053039865802BR5925EMERSON RODRIGUES DA ROCH6009SAO PAULO622905251KST5W8STWTK7TDDEM0XY7GTS6304B666
+</p>
+
+<button
+onclick="copiarPix()"
+class="w-full mt-4 btn-gold py-3 rounded-xl"
+>
+Copiar Chave PIX
+</button>
+
+</div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="border-t border-zinc-700 p-6 bg-black">
+
+<div class="flex items-center justify-between mb-5">
+
+<span class="text-lg font-bold">
+Total:
+</span>
+
+<span
+id="total-modal"
+class="text-2xl font-extrabold text-yellow-400"
+>
+R$ 0,00
+</span>
+
+</div>
+
+<input
+id="input-endereco"
+type="text"
+placeholder="Digite seu endereço..."
+class="w-full bg-zinc-800 border border-zinc-700 focus:border-yellow-400 outline-none rounded-xl px-4 py-3 text-white"
+/>
+
+<p
+id="aviso-endereco"
+class="hidden text-red-500 text-sm mt-2"
+>
+Informe o endereço para entrega.
+</p>
+
+<button
+id="btn-finalizar-pedido"
+class="w-full mt-5 bg-green-600 hover:bg-green-700 text-white font-bold py-4 rounded-2xl shadow-lg transition-all active:scale-95"
+>
+<i class="fa-brands fa-whatsapp mr-2"></i>
+Finalizar Pedido
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+const produtos = [
+
+{
+id:1,
+nome:"Whisky Jack Daniels",
+descricao:"Whisky premium importado.",
+preco:129.90,
+imagem:"./assets/jack-daniels.jpg"
+},
+
+{
+id:2,
+nome:"Heineken Long Neck",
+descricao:"Cerveja gelada premium.",
+preco:8.90,
+imagem:"./assets/heineken.jpg"
+},
+
+{
+id:3,
+nome:"Red Bull Energy Drink",
+descricao:"Energético Red Bull 250ml.",
+preco:14.90,
+imagem:"./assets/redbull.jpg"
+},
+
+{
+id:4,
+nome:"Smirnoff Ice",
+descricao:"Bebida ice sabor limão.",
+preco:12.90,
+imagem:"./assets/smirnoff-ice.jpg"
+},
+
+{
+id:5,
+nome:"Vodka Absolut",
+descricao:"Vodka premium importada.",
+preco:89.90,
+imagem:"./assets/absolut.jpg"
+},
+
+{
+id:6,
+nome:"Guaraná Antarctica 2L",
+descricao:"Refrigerante gelado.",
+preco:13.90,
+imagem:"./assets/guarana.jpg"
+},
+
+{
+id:7,
+nome:"Combo Skol + Gelo",
+descricao:"Pack especial da madrugada.",
+preco:49.90,
+imagem:"./assets/skol-combo.jpg"
+},
+
+{
+id:8,
+nome:"Vinho Tinto Suave",
+descricao:"Vinho suave premium.",
+preco:39.90,
+imagem:"./assets/vinho.jpg"
+}
+
+];
+
+let carrinho = [];
+
+const cardapioContainer =
+document.getElementById("cardapio");
+
+const modalCarrinho =
+document.getElementById("modal-carrinho");
+
+const btnVerCarrinho =
+document.getElementById("btn-ver-carrinho");
+
+const btnFecharModal =
+document.getElementById("btn-fechar-modal");
+
+const itensCarrinhoContainer =
+document.getElementById("itens-carrinho");
+
+const totalBarra =
+document.getElementById("total-barra");
+
+const totalModal =
+document.getElementById("total-modal");
+
+const contadorCarrinho =
+document.getElementById("contador-carrinho");
+
+const inputEndereco =
+document.getElementById("input-endereco");
+
+const avisoEndereco =
+document.getElementById("aviso-endereco");
+
+const btnFinalizarPedido =
+document.getElementById("btn-finalizar-pedido");
+
+function renderizarCardapio(){
+
+cardapioContainer.innerHTML = "";
+
+produtos.forEach(produto => {
+
+const div = document.createElement("div");
+
+div.className =
+"card-produto rounded-3xl overflow-hidden shadow-2xl flex flex-col";
+
+div.innerHTML = `
+<img
+src="${produto.imagem}"
+alt="${produto.nome}"
+class="w-full h-56 object-cover"
+>
+
+<div class="p-5 flex flex-col flex-1">
+
+<h3 class="font-extrabold text-xl gold">
+${produto.nome}
+</h3>
+
+<p class="text-gray-400 text-sm mt-2 flex-1">
+${produto.descricao}
+</p>
+
+<div class="flex items-center justify-between mt-5">
+
+<span class="text-2xl font-extrabold text-yellow-400">
+R$ ${produto.preco.toFixed(2).replace(".", ",")}
+</span>
+
+<button
+class="btn-gold px-4 py-3 rounded-xl shadow-lg btn-add"
+data-id="${produto.id}"
+>
+<i class="fa-solid fa-plus"></i>
+</button>
+
+</div>
+
+</div>
+`;
+
+cardapioContainer.appendChild(div);
+
+});
+
+}
+
+cardapioContainer.addEventListener("click", (e) => {
+
+const botao = e.target.closest(".btn-add");
+
+if(botao){
+
+const id =
+parseInt(botao.getAttribute("data-id"));
+
+adicionarAoCarrinho(id);
+
+}
+
+});
+
+function adicionarAoCarrinho(id){
+
+const produto =
+produtos.find(p => p.id === id);
+
+const itemExistente =
+carrinho.find(item => item.id === id);
+
+if(itemExistente){
+
+itemExistente.quantidade++;
+
+}else{
+
+carrinho.push({
+...produto,
+quantidade:1
+});
+
+}
+
+atualizarInterface();
+
+}
+
+function atualizarInterface(){
+
+let total = 0;
+let totalItens = 0;
+
+carrinho.forEach(item => {
+
+total += item.preco * item.quantidade;
+totalItens += item.quantidade;
+
+});
+
+totalBarra.textContent =
+`R$ ${total.toFixed(2).replace(".", ",")}`;
+
+totalModal.textContent =
+`R$ ${total.toFixed(2).replace(".", ",")}`;
+
+contadorCarrinho.textContent =
+totalItens;
+
+}
+
+btnVerCarrinho.addEventListener("click", () => {
+
+renderizarCarrinhoModal();
+
+modalCarrinho.classList.remove("hidden");
+
+});
+
+btnFecharModal.addEventListener("click", () => {
+
+modalCarrinho.classList.add("hidden");
+
+});
+
+function renderizarCarrinhoModal(){
+
+itensCarrinhoContainer.innerHTML = "";
+
+if(carrinho.length === 0){
+
+itensCarrinhoContainer.innerHTML = `
+<p class="text-center text-gray-400">
+Seu carrinho está vazio.
+</p>
+`;
+
+return;
+
+}
+
+carrinho.forEach(item => {
+
+const div = document.createElement("div");
+
+div.className =
+"bg-zinc-800 rounded-2xl p-4 flex items-center justify-between";
+
+div.innerHTML = `
+<div>
+
+<h4 class="font-bold text-sm">
+${item.nome}
+</h4>
+
+<span class="text-gray-400 text-xs">
+R$ ${item.preco.toFixed(2).replace(".", ",")}
+</span>
+
+</div>
+
+<div class="flex items-center gap-3">
+
+<button
+class="text-red-500 font-bold btn-diminuir"
+data-id="${item.id}"
+>
+-
+</button>
+
+<span class="font-bold">
+${item.quantidade}
+</span>
+
+<button
+class="text-green-500 font-bold btn-aumentar"
+data-id="${item.id}"
+>
++
+</button>
+
+</div>
+`;
+
+itensCarrinhoContainer.appendChild(div);
+
+});
+
+}
+
+itensCarrinhoContainer.addEventListener("click", (e) => {
+
+if(e.target.classList.contains("btn-aumentar")){
+
+const id =
+parseInt(e.target.getAttribute("data-id"));
+
+const item =
+carrinho.find(i => i.id === id);
+
+item.quantidade++;
+
+}
+
+if(e.target.classList.contains("btn-diminuir")){
+
+const id =
+parseInt(e.target.getAttribute("data-id"));
+
+const idx =
+carrinho.findIndex(i => i.id === id);
+
+if(carrinho[idx].quantidade > 1){
+
+carrinho[idx].quantidade--;
+
+}else{
+
+carrinho.splice(idx,1);
+
+}
+
+}
+
+atualizarInterface();
+renderizarCarrinhoModal();
+
+});
+
+function copiarPix(){
+
+navigator.clipboard.writeText(
+`00020101021126580014br.gov.bcb.pix0136581e7489-78a4-4c1a-a5a6-cc241cb1dbf55204000053039865802BR5925EMERSON RODRIGUES DA ROCH6009SAO PAULO622905251KST5W8STWTK7TDDEM0XY7GTS6304B666`
+);
+
+alert("Chave PIX copiada!");
+
+}
+
+btnFinalizarPedido.addEventListener("click", () => {
+
+if(carrinho.length === 0){
+
+alert("Seu carrinho está vazio!");
+return;
+
+}
+
+if(inputEndereco.value.trim() === ""){
+
+avisoEndereco.classList.remove("hidden");
+return;
+
+}
+
+avisoEndereco.classList.add("hidden");
+
+let mensagem =
+`🍷 *ADEGA 24H DELIVERY* 🍷\n\n`;
+
+carrinho.forEach(item => {
+
+mensagem +=
+`• ${item.quantidade}x ${item.nome} - R$ ${(item.preco * item.quantidade).toFixed(2)}\n`;
+
+});
+
+const total =
+carrinho.reduce((acc,item) => {
+return acc + item.preco * item.quantidade;
+},0);
+
+mensagem +=
+`\n💰 *Total:* R$ ${total.toFixed(2)}`;
+
+mensagem +=
+`\n📍 *Endereço:* ${inputEndereco.value}`;
+
+mensagem +=
+`\n\n💳 *Pagamento via PIX realizado.*`;
+
+const telefone = "5511976794749";
+
+const url =
+`https://api.whatsapp.com/send?phone=${telefone}&text=${encodeURIComponent(mensagem)}`;
+
+window.open(url,"_blank");
+
+});
+
+renderizarCardapio();
+
+</script>
+
 </body>
 </html>
