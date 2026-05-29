@@ -437,7 +437,7 @@ mensagem +=
 mensagem +=
 `\n\n✅ Pedido enviado com sucesso!`;
 
-const telefone = "5511976794749";
+const telefone = "5511999999999";
 
 const url =
 `https://api.whatsapp.com/send?phone=${telefone}&text=${encodeURIComponent(mensagem)}`;
