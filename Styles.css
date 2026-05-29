@@ -1,3 +1,6 @@
+# styles.css
+
+```css id="n5xv1q"
 /*
 ========================================================
 © 2026 ADEGA 24H DELIVERY PREMIUM
@@ -6,11 +9,8 @@ Todos os direitos reservados.
 Proprietário:
 EMERSON RODRIGUES DA ROCHA
 
-É proibida a cópia, redistribuição,
-revenda ou reutilização deste sistema
-sem autorização do proprietário.
-
-Sistema protegido por direitos autorais.
+Sistema protegido internacionalmente
+por direitos autorais e propriedade intelectual.
 ========================================================
 */
 
@@ -19,6 +19,10 @@ Sistema protegido por direitos autorais.
     padding:0;
     box-sizing:border-box;
     font-family:"Poppins",sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
 }
 
 body{
@@ -31,7 +35,7 @@ body{
 
 .banner{
     background:
-    linear-gradient(rgba(0,0,0,.82), rgba(0,0,0,.88)),
+    linear-gradient(rgba(0,0,0,.82), rgba(0,0,0,.90)),
     url("./assets/banner-adega.jpg");
 
     background-size:cover;
@@ -43,15 +47,14 @@ body{
     color:#facc15;
 }
 
-.bg-gold{
-    background:#facc15;
-}
+/* BOTÕES */
 
 .btn-gold{
     background:#facc15;
     color:#000;
     font-weight:700;
     transition:.3s;
+    border:none;
 }
 
 .btn-gold:hover{
@@ -70,7 +73,7 @@ body{
 .card-produto:hover{
     transform:translateY(-8px);
     border-color:#facc15;
-    box-shadow:0 0 25px rgba(250,204,21,.2);
+    box-shadow:0 0 25px rgba(250,204,21,.15);
 }
 
 .card-produto img{
@@ -91,19 +94,77 @@ body{
     background:#16a34a;
 }
 
-/* SCROLL */
+/* PIX */
 
-.scroll-hidden::-webkit-scrollbar{
-    display:none;
+.pix-box{
+    background:#0f0f0f;
+    border:2px solid #facc15;
+    border-radius:24px;
+    padding:24px;
+    margin:20px;
+}
+
+.pix-box img{
+    width:220px;
+    max-width:100%;
+    display:block;
+    margin:0 auto;
+    border-radius:18px;
+    background:#fff;
+    padding:12px;
+}
+
+.pix-code{
+    background:#1a1a1a;
+    border:1px solid #333;
+    color:#d4d4d4;
+    padding:14px;
+    border-radius:14px;
+    margin-top:18px;
+    font-size:12px;
+    line-height:1.6;
+    word-break:break-all;
+    max-height:130px;
+    overflow-y:auto;
+}
+
+.pix-btn{
+    width:100%;
+    margin-top:16px;
+    background:#facc15;
+    color:#000;
+    font-weight:700;
+    border:none;
+    border-radius:14px;
+    padding:14px;
+    transition:.3s;
+}
+
+.pix-btn:hover{
+    background:#eab308;
 }
 
 /* MODAL */
 
 #modal-carrinho{
-    backdrop-filter:blur(5px);
+    backdrop-filter:blur(6px);
 }
 
-/* INPUTS */
+/* FINALIZAR */
+
+.footer-finalizar{
+    position:sticky;
+    bottom:0;
+    background:#000;
+    padding:24px;
+    border-top:1px solid #27272a;
+}
+
+.footer-finalizar button{
+    width:100%;
+}
+
+/* INPUT */
 
 input{
     transition:.3s;
@@ -114,18 +175,11 @@ input:focus{
     box-shadow:0 0 0 3px rgba(250,204,21,.15);
 }
 
-/* BOTÕES */
+/* CARRINHO */
 
-button{
-    cursor:pointer;
-    transition:.3s;
+#btn-ver-carrinho{
+    animation:pulseGold 2s infinite;
 }
-
-button:active{
-    transform:scale(.96);
-}
-
-/* ANIMAÇÃO */
 
 @keyframes pulseGold{
 
@@ -143,8 +197,25 @@ button:active{
 
 }
 
-#btn-ver-carrinho{
-    animation:pulseGold 2s infinite;
+/* NOTIFICAÇÃO */
+
+.notificacao{
+    position:fixed;
+    top:20px;
+    right:20px;
+    background:#facc15;
+    color:#000;
+    padding:16px 24px;
+    border-radius:18px;
+    font-weight:700;
+    z-index:99999;
+    box-shadow:0 10px 30px rgba(0,0,0,.4);
+}
+
+/* SCROLL */
+
+.scroll-hidden::-webkit-scrollbar{
+    display:none;
 }
 
 /* RESPONSIVO */
@@ -160,3 +231,4 @@ button:active{
     }
 
 }
+```
