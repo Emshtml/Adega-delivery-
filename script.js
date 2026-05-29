@@ -1,3 +1,6 @@
+# script.js
+
+```javascript id="0ikjlwm"
 /*
 ========================================================
 © 2026 ADEGA 24H DELIVERY PREMIUM
@@ -6,13 +9,12 @@ Todos os direitos reservados.
 Proprietário:
 EMERSON RODRIGUES DA ROCHA
 
-É proibida a cópia, redistribuição,
-revenda ou reutilização deste sistema
-sem autorização do proprietário.
-
-Sistema protegido por direitos autorais.
+Sistema protegido internacionalmente
+por direitos autorais e propriedade intelectual.
 ========================================================
 */
+
+/* PRODUTOS */
 
 const produtos = [
 
@@ -82,7 +84,21 @@ imagem:"./assets/vinho.jpg"
 
 ];
 
+/* PIX */
+
+const chavePix =
+"00020101021126580014br.gov.bcb.pix0136581e7489-78a4-4c1a-a5a6-cc241cb1dbf55204000053039865802BR5925EMERSON RODRIGUES DA ROCH6009SAO PAULO622905251KST5W8STWTK7TDDEM0XY7GTS6304B666";
+
+/* TELEFONE */
+
+const telefone =
+"5511999999999";
+
+/* CARRINHO */
+
 let carrinho = [];
+
+/* ELEMENTOS */
 
 const cardapioContainer =
 document.getElementById("cardapio");
@@ -117,12 +133,7 @@ document.getElementById("aviso-endereco");
 const btnFinalizarPedido =
 document.getElementById("btn-finalizar-pedido");
 
-/* PIX */
-
-const chavePix =
-"00020101021126580014br.gov.bcb.pix0136581e7489-78a4-4c1a-a5a6-cc241cb1dbf55204000053039865802BR5925EMERSON RODRIGUES DA ROCH6009SAO PAULO622905251KST5W8STWTK7TDDEM0XY7GTS6304B666";
-
-/* RENDERIZAR CARDÁPIO */
+/* RENDERIZAR */
 
 function renderizarCardapio(){
 
@@ -221,7 +232,7 @@ atualizarInterface();
 
 }
 
-/* INTERFACE */
+/* ATUALIZAR */
 
 function atualizarInterface(){
 
@@ -411,7 +422,7 @@ return;
 avisoEndereco.classList.add("hidden");
 
 let mensagem =
-`🍷 *ADEGA 24H DELIVERY* 🍷\n\n`;
+`🍷 *ADEGA 24H DELIVERY PREMIUM* 🍷\n\n`;
 
 carrinho.forEach(item => {
 
@@ -437,8 +448,6 @@ mensagem +=
 mensagem +=
 `\n\n✅ Pedido enviado com sucesso!`;
 
-const telefone = "5511999999999";
-
 const url =
 `https://api.whatsapp.com/send?phone=${telefone}&text=${encodeURIComponent(mensagem)}`;
 
@@ -454,7 +463,7 @@ const notificacao =
 document.createElement("div");
 
 notificacao.className =
-"fixed top-6 right-6 bg-yellow-400 text-black font-bold px-6 py-4 rounded-2xl shadow-2xl z-[9999]";
+"notificacao";
 
 notificacao.textContent = texto;
 
@@ -471,3 +480,4 @@ notificacao.remove();
 /* INICIAR */
 
 renderizarCardapio();
+```
